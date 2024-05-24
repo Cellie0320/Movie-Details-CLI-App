@@ -1,11 +1,11 @@
-const request = requrie('request');
+const request = require('request');
 const fs = require('fs');
 
 //Load Configuration
 const Configuration = 
 {
     omdb: {
-            apiKey: '7d9cead0', //OMDb API Key
+            apiKey: '8d567fb9', //OMDb API Key
           }
 };
 
@@ -17,7 +17,8 @@ const Configuration =
 
 function fetchMovie(title, callback) 
 {
-    const url = `http://www.omdbapi.com/?t=${title}&apikey=${Configuration.omdb.apiKey}`;
+    const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${Configuration.omdb.apiKey}`;
+
 
     request(url, {json: true}, (error, response, body) => {
                                                             if(error)
