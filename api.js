@@ -1,4 +1,4 @@
-const request = require('request');
+const fetch = require('node-fetch');
 
 // Load Configuration
 const Configuration = {
@@ -16,28 +16,33 @@ function fetchMovie(title, callback) {
     const encodedTitle = encodeURIComponent(title);
     const url = `http://www.omdbapi.com/?t=${encodedTitle}&apikey=${Configuration.omdb.apiKey}`;
 
-    request(url, { json: true }, (error, response, body) => {
-        if (error) {
+    (async () => {
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Failed to Fetch Movie Details');
+            }
+
+            const body = await response.json();
+
+            if (body.Response === 'False') {
+                throw new Error(body.Error || 'Failed to Fetch Movie Details');
+            }
+
+            const movieDetails = {
+                title: body.Title,
+                year: body.Year,
+                imdbRating: body.imdbRating,
+                language: body.Language,
+                plot: body.Plot
+            };
+
+            callback(null, movieDetails);
+        } catch (error) {
             callback(error, null);
-            return;
         }
-
-        if (response.statusCode !== 200 || body.Response === 'False') {
-            callback(new Error('Failed to Fetch Movie Details'), null);
-            return;
-        }
-
-        // Parse and Display Details
-        const movieDetails = {
-            title: body.Title,
-            year: body.Year,
-            imdbRating: body.imdbRating,
-            language: body.Language,
-            plot: body.Plot
-        };
-
-        callback(null, movieDetails);
-    });
+    })();
 }
 
 // Export Functions

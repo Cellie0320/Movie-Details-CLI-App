@@ -4,7 +4,7 @@ This is a Command Line Interface (CLI) application that fetches movie details fr
 
 ## Features
 
-- Makes HTTP requests to the OMDb API using the `request` NPM module.
+- Makes HTTP requests to the OMDb API using the lightweight `node-fetch` client.
 - Gets a JSON object that includes the movie's title, year, IMDb rating, language, and plot.
 - Interacts with the user through the command line.
 - Continuously prompts the user for movie titles until the user types "exit".
@@ -24,7 +24,7 @@ This is a Command Line Interface (CLI) application that fetches movie details fr
 
 2. Install the necessary dependencies:
     ```bash
-    npm install request readline
+    npm install
     ```
 
 ## Configuration
